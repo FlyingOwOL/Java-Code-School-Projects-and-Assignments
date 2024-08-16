@@ -1,0 +1,46 @@
+import java.util.Scanner;
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner scanner= new Scanner(System.in);
+		int num1,num2, result;
+		char operator, exit;
+		do{
+		    System.out.print("Give a first number:");
+		    num1= scanner.nextInt();
+		    System.out.print("Give a second number:");
+	        num2= scanner.nextInt();
+	        System.out.print("Choose a operator:");
+		    operator= scanner.next().charAt(0);
+		    switch(operator)
+		    {
+		    case '+':
+		        result=num1+num2;
+		        break;
+		    case '-':
+		        result=num1-num2;
+		        break;
+		    case '*':
+		        result=num1*num2;
+		        break;
+		    case '/':
+		        if(num2!=0)
+		        {
+		            result=num1/num2;
+		        }
+		        else
+		        {
+		            result=0;
+		            System.out.println("Denominator cannot be 0");
+		        }
+		        break;
+		    default:
+		        result=0;
+		    }
+		    System.out.println(result);
+		    System.out.print("Would you like to continue?(Y/N)");
+		    exit= scanner.next().charAt(0);
+		}while(Character.toUpperCase(exit)!='N');
+		scanner.close();
+	}
+}
