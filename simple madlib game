@@ -1,0 +1,21 @@
+import java.util.Scanner;
+public class Main {
+    public static void main (String[] args){
+        Scanner userInput = new Scanner(System.in);
+        System.out.print ("What is your name? ");
+        String name = userInput.nextLine();
+        System.out.print ("How old are you? ");
+        int age = userInput.nextInt();
+        userInput.nextLine(); //consume new line buffer
+        System.out.print ("What is your favorite soju flavor? ");
+        String flavor = userInput.nextLine();
+        System.out.print ("What is your favorite chaser? ");
+        String chaser = userInput.nextLine();
+        System.out.print ("What is your favorite pulutan? ");
+        String pulutan = userInput.nextLine();
+
+        System.out.printf ("Hello %s! You are %d years old. Your favorite soju flavor is %s, your favorite chaser is %s, and your favorite pulutan is %s.",
+                            name, age, flavor, chaser, pulutan);
+        userInput.close();
+    }
+}
