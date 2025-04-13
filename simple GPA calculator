@@ -1,0 +1,52 @@
+import java.util.Scanner;
+import java.util.Arrays;
+public class Main {
+    public static void main(String[] args) {
+        Scanner userInput = new Scanner (System.in);
+        System.out.print ("Enter number of courses this term: ");
+        int dNumCourses = Integer.parseInt (userInput.nextLine());
+        float fRawGrades[] = new float [dNumCourses];
+        String courseNames[] = new String [dNumCourses];
+        float fComputedGrades[] = new float [dNumCourses];
+        float fTotalGradePoints = 0.0f;
+        int dTotalUnits = 0;
+        for (int x = 0; x < dNumCourses; x++){
+            System.out.printf ("Enter name of %d course: ", x + 1);
+            courseNames[x] = userInput.nextLine();
+            System.out.printf ("Enter grade for " + courseNames[x] + ": ");
+            fRawGrades[x] = Float.parseFloat (userInput.nextLine());
+            System.out.print ("Enter units for " + courseNames[x] + ": ");
+            int dUnits = Integer.parseInt (userInput.nextLine());
+            if (fRawGrades[x] <= 4.0 && fRawGrades[x] >= 0.0){
+                fComputedGrades [x] = fRawGrades[x] * dUnits;
+            } else {
+                if (fRawGrades[x] >= 95){
+                    fComputedGrades[x] = 4.0f * dUnits;  
+                } else if (fRawGrades[x] >= 90) {
+                    fComputedGrades[x] = 3.7f * dUnits;
+                } else if (fRawGrades[x] >= 85) {
+                    fComputedGrades[x] = 3.3f * dUnits;
+                } else if (fRawGrades[x] >= 80) {
+                    fComputedGrades[x] = 3.0f * dUnits;
+                } else if (fRawGrades[x] >= 75) {
+                    fComputedGrades[x] = 2.5f * dUnits;
+                } else if (fRawGrades[x] >= 70) {
+                    fComputedGrades[x] = 2.0f * dUnits;
+                } else if (fRawGrades[x] >= 65) {
+                    fComputedGrades[x] = 1.5f * dUnits;
+                } else if (fRawGrades[x] >= 60) {
+                    fComputedGrades[x] = 1.0f * dUnits;
+                } else {
+                    fComputedGrades [x] = 0.0f * dUnits;
+                }
+            }
+            fTotalGradePoints += fComputedGrades[x];
+            dTotalUnits += dUnits;
+        }
+        System.out.println(Arrays.toString(courseNames));
+        System.out.println(Arrays.toString(fRawGrades));
+        System.out.println(Arrays.toString(fComputedGrades));    
+        System.out.printf ("Total units is %d and total GPA is %.2f\n", dTotalUnits, (fTotalGradePoints/dTotalUnits));
+        userInput.close();
+    }
+}
