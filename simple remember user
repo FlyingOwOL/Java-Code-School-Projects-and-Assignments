@@ -1,0 +1,23 @@
+import java.util.Scanner;
+
+public class Main 
+{
+    public static void main (String[] args)
+    {
+        Scanner userInput = new Scanner(System.in);
+        String savedName = ""; 
+        String name = " ";
+        do{
+            System.out.print ("Enter a name: ");
+            name = userInput.nextLine();
+
+            if (name.equals(savedName)){
+                System.out.println ("Welcome back " + savedName + "!");
+            } else {
+                System.out.println ("Hello " + name + "!");
+                savedName = new String (name);                
+            }
+        } while (!name.equals("exit"));
+        userInput.close();
+    }
+}
