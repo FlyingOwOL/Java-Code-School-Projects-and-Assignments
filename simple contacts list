@@ -1,0 +1,57 @@
+import java.util.Scanner;
+import java.util.HashMap;
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner userInput = new Scanner (System.in);
+        HashMap <Integer, String> contacts = new HashMap <Integer, String>();
+        int dOption = 0;
+        int contactID = 0;
+        do{
+            System.out.printf ("%s\n%s\n%s\n%s\n%s",
+                "1. Add a contact",
+                "2. View contacts",
+                "3. Delete a contact",
+                "4. Exit",
+                "Please select an option: ");
+            dOption = userInput.nextInt();
+            switch (dOption){
+                case 1:
+                    System.out.print ("Enter contact ID: ");
+                    contactID = userInput.nextInt();
+                    userInput.nextLine(); // Consume the newline character
+                    System.out.print ("Enter contact name: ");
+                    String contactName = userInput.nextLine();
+                    contacts.put (contactID, contactName);
+                    System.out.println ("Contact added successfully!");
+                    break;
+                case 2:
+                    System.out.println ("Contacts List:");
+                    for (int key : contacts.keySet()){
+                        System.out.println (key + ". " + contacts.get(key));
+                    }
+                    break;
+                case 3:
+                    for (int key : contacts.keySet()){
+                        System.out.println (key + ". " + contacts.get(key));
+                    }
+                    System.out.print ("Enter contact ID to delete: ");
+                    contactID = userInput.nextInt();
+                    if (contacts.containsKey(contactID)){
+                        contacts.remove(contactID);
+                        System.out.println ("Contact deleted successfully!");
+                    } else {
+                        System.out.println ("Contact ID not found!");
+                    }
+                    break;
+                case 4:
+                    System.out.println ("Exiting the program...");
+                    break;
+                default:
+                    System.out.println ("Out of range option");
+                    break;
+            }
+        } while (dOption != 4);
+        userInput.close();
+    }
+}
