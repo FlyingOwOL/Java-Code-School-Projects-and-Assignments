@@ -35,6 +35,7 @@ public class Main{
                     System.out.println("Number removed successfully.");
                     break;
                 case 3:
+                    dSum = 0;
                     dMinimum = dNumbers.get(0);
                     dMaximum = dNumbers.get(dNumbers.size() - 1);
                     for (int numbers : dNumbers){
