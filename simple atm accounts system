@@ -1,0 +1,199 @@
+import java.util.Scanner;
+import java.util.HashMap;
+
+class Accounts{
+    private String accountName;
+    private int dPin;
+    private double balance;
+    Accounts (String accountName, int dPin, double balance){
+        this.accountName = accountName;
+        this.dPin = dPin;
+        this.balance = balance;
+    }
+    public String getAccountName(){
+        return accountName;
+    }
+    public int getAccountNumber(){
+        return dPin;
+    }
+    public double getBalance(){
+        return balance;
+    }
+    public void addBalance (double amount){
+        this.balance += amount;
+    }
+}
+class savingsAccount extends Accounts{
+    savingsAccount(String accountName, int dPin, double balance){
+        super(accountName, dPin, balance);
+    }
+}
+class timeDepositAccount extends Accounts{
+    private int maturityPeriod;
+    private double TotalAmount;
+    timeDepositAccount(String accountName, int dPin, double balance, int maturityPeriod){
+        super(accountName, dPin, balance);
+        this.maturityPeriod = maturityPeriod;
+        this.TotalAmount = balance + (balance * 0.05 * maturityPeriod);
+    }
+    public int getMaturityPeriod(){
+        return maturityPeriod;
+    }
+    public double getTotalAmount(){
+        return TotalAmount;
+    }
+}
+public class Main{
+    private static void createAccount (HashMap <Integer, savingsAccount> savingsAccounts, 
+                                HashMap <Integer, timeDepositAccount> timeDepositAccounts,
+                                Scanner userInput)
+    {
+        int dOption = 0;
+        do{
+            System.out.printf ("%s\n%s\n%s\n%s",
+            "1. Create Savings Account",
+            "2. Create Time Deposit Account",
+            "3. Back to Main Menu",
+            "Enter your choice: ");
+            dOption = userInput.nextInt();
+            switch (dOption){
+                case 1:
+                    userInput.nextLine(); // Consume newline left-over
+                    System.out.print ("Enter account name: ");
+                    String accountName = userInput.nextLine();
+                    System.out.print ("Enter account pin: ");
+                    int dPin = userInput.nextInt();
+                    System.out.print ("Enter initial account balance: ");
+                    double balance = userInput.nextDouble();
+                    System.out.print ("Enter account key: ");
+                    int accountKey = userInput.nextInt();
+                    savingsAccount newSavingsAccount = new savingsAccount(accountName, dPin, balance);
+                    savingsAccounts.put(accountKey, newSavingsAccount);
+                    System.out.println("Savings account created successfully.");
+                    break;
+                case 2:
+                    userInput.nextLine(); // Consume newline left-over
+                    System.out.print ("Enter account name: ");
+                    String accountNameTD = userInput.nextLine();
+                    System.out.print ("Enter account pin: ");
+                    int dPinTD = userInput.nextInt();
+                    System.out.print ("Enter initial account balance: ");
+                    double balanceTD = userInput.nextDouble();
+                    System.out.print ("Enter maturity period (in months): ");
+                    int maturityPeriod = userInput.nextInt();
+                    System.out.print ("Enter account key: ");
+                    int accountKeyTD = userInput.nextInt();
+                    timeDepositAccount newTimeDepositAccount = new timeDepositAccount(accountNameTD, dPinTD, balanceTD, maturityPeriod);
+                    timeDepositAccounts.put(accountKeyTD, newTimeDepositAccount);
+                    System.out.println("Time deposit account created successfully.");
+                    break;
+                case 3:
+                    System.out.println("Returning to main menu.");
+                    break;
+                default:
+                    System.out.println("Input out of range. Please try again.");
+                    break;
+            }
+        }while (dOption != 3);
+    }
+
+    private static void viewAccount (HashMap <Integer, savingsAccount> savingsAccounts, 
+                                     HashMap <Integer, timeDepositAccount> timeDepositAccounts,
+                                     Scanner userInput)
+    {
+        int dOption = 0;
+        do{
+            System.out.printf("%s\n%s\n%s\n%s",
+            "1. View Savings Account",
+            "2. View Time Deposit Account",
+            "3. Back to Main Menu",
+            "Enter your choice: ");
+            dOption = userInput.nextInt();
+            switch (dOption){
+                case 1:
+                    viewSavingsAccount(savingsAccounts, userInput);
+                    break;
+                case 2:
+                    viewTimeDeposit(timeDepositAccounts, userInput);
+                    break;
+                case 3:
+                    System.out.println("Returning to main menu.");
+                    break;
+                default:
+                    System.out.println("Input out of range. Please try again.");
+                    break;
+            }
+        } while(dOption != 3);
+    }
+
+    private static void viewSavingsAccount (HashMap <Integer, savingsAccount> savingsAccounts,
+                                            Scanner userInput)
+    {
+        for (Integer key : savingsAccounts.keySet()){
+            savingsAccount account = savingsAccounts.get(key);
+            System.out.printf("%d. Account Name: %s\n", key, account.getAccountName());
+        }
+        System.out.print("Enter account key: ");
+        int accountKey = userInput.nextInt();
+        System.out.printf ("Hello %s\n Enter pin: ", savingsAccounts.get(accountKey).getAccountName());
+        int dPin = userInput.nextInt();
+        if (dPin == savingsAccounts.get(accountKey).getAccountNumber()){
+            System.out.printf ("Account Name: %s\n", savingsAccounts.get(accountKey).getAccountName());
+            System.out.printf ("Account Balance: %.2f\n", savingsAccounts.get(accountKey).getBalance());
+        } else {
+            System.out.println("Incorrect pin. Get out");
+        }
+        System.out.println("Returning to main menu.");
+    }
+
+    private static void viewTimeDeposit (HashMap <Integer, timeDepositAccount> timeDepositAccounts,
+                                         Scanner userInput)
+    {
+        for (Integer key : timeDepositAccounts.keySet()){
+            timeDepositAccount account = timeDepositAccounts.get(key);
+            System.out.printf("%d. Account Name: %s\n", key, account.getAccountName());
+        }
+        System.out.print("Enter account key: ");
+        int accountKey = userInput.nextInt();
+        System.out.printf ("Hello %s\n Enter pin: ", timeDepositAccounts.get(accountKey).getAccountName());
+        int dPin = userInput.nextInt();
+        if (dPin == timeDepositAccounts.get(accountKey).getAccountNumber()){
+            System.out.printf ("Account Name: %s\n", timeDepositAccounts.get(accountKey).getAccountName());
+            System.out.printf ("Account Balance: %.2f\n", timeDepositAccounts.get(accountKey).getBalance());
+            System.out.printf ("Maturity Period: %d months\n", timeDepositAccounts.get(accountKey).getMaturityPeriod());
+            System.out.printf ("Total Amount after maturity: %.2f\n", timeDepositAccounts.get(accountKey).getTotalAmount());
+        } else {
+            System.out.println("Incorrect pin. Get out");
+        }
+        System.out.println("Returning to main menu.");
+    }
+    public static void main(String[] args){
+        HashMap <Integer, savingsAccount> savingsAccounts = new HashMap<Integer, savingsAccount>();
+        HashMap <Integer, timeDepositAccount> timeDepositAccounts = new HashMap<Integer, timeDepositAccount>();
+        Scanner userInput = new Scanner (System.in);
+        int dOption = 0;
+        do{
+            System.out.printf ("%s\n%s\n%s\n",
+            "1. Create Account",
+            "2. View Account",
+            "3. Exit");
+            System.out.print("Enter your choice: ");
+            dOption = userInput.nextInt();
+            switch (dOption){
+                case 1:
+                    createAccount(savingsAccounts, timeDepositAccounts, userInput);
+                    break;
+                case 2:
+                    viewAccount(savingsAccounts, timeDepositAccounts, userInput);
+                    break;
+                case 3:
+                    System.out.println("Exiting the program.");
+                    break;
+                default:
+                    System.out.println("Input out of range");
+                    break;
+            }
+        } while (dOption != 3);
+        userInput.close();
+    }
+}
